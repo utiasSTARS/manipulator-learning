@@ -1,0 +1,303 @@
+<?xml version="0.0" ?>
+<robot name="urdf_door">
+ <link name="world"/>
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="baseLink"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <link name="baseLink">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0.35"/>
+       <mass value="1.0"/>
+       <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.05 0 0.5"/>
+<!--      <geometry>-->
+<!--      <box size="0.1 0.1 1"/>-->
+<!--      </geometry>-->
+      <geometry>
+        <mesh filename="../meshes/cube.obj" scale=".1 .1 1"/>
+      </geometry>
+	   <material name="framemat0">
+<!--        <color rgba=".54 .27 .07 1" />-->
+        <color rgba=".8 .8 .8 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.95 0 0.5"/>
+<!--      <geometry>-->
+<!--        <box size="0.1 0.1 1"/>-->
+<!--      </geometry>-->
+      <geometry>
+        <mesh filename="../meshes/cube.obj" scale=".1 .1 1"/>
+      </geometry>
+	  <material name="framemat0"/>	 
+    </visual>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.5 0 0.95"/>
+<!--      <geometry>-->
+<!--        <box size="1 0.1 0.1"/>-->
+<!--      </geometry>-->
+      <geometry>
+        <mesh filename="../meshes/cube.obj" scale="1 0.1 0.1"/>
+      </geometry>
+	  <material name="framemat0"/>
+	  </visual>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.5 0 0.05"/>
+<!--      <geometry>-->
+<!--        <box size="1 0.1 0.1"/>-->
+<!--      </geometry>-->
+      <geometry>
+        <mesh filename="../meshes/cube.obj" scale="1 0.1 0.1"/>
+      </geometry>
+	  <material name="framemat0"/>
+	  </visual>
+
+     <!-- adding door backing -->
+<!--      <visual>-->
+<!--      <origin rpy="0 0 0" xyz="0.9 .15 0.5"/>-->
+<!--      <geometry>-->
+<!--&lt;!&ndash;        <mesh filename="../meshes/cube.obj" scale="0.8 0.025 0.1"/>&ndash;&gt;-->
+<!--        <mesh filename="../meshes/cube.obj" scale="0.8 0.1 0.1"/>-->
+<!--      </geometry>-->
+<!--	  <material name="framemat0"/>-->
+<!--	  </visual>-->
+
+    <collision>
+      <origin rpy="0 0 0" xyz="0.05 0 0.5"/>
+      <geometry>
+        <box size="0.1 0.1 1"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.95 0 0.5"/>
+      <geometry>
+        <box size="0.1 0.1 1"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.5 0 0.95"/>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.5 0 0.05"/>
+      <geometry>
+        <box size="1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+<!--    <collision>-->
+<!--      <origin rpy="0 0 0" xyz="0.9 .15 0.5"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.8 0.1 0.1"/>-->
+<!--      </geometry>-->
+<!--	  </collision>-->
+
+  </link>
+
+<!--    <link name="backing">-->
+<!--        <inertial>-->
+<!--          <origin rpy="0 0 0" xyz="0. 0 0."/>-->
+<!--          <mass value="10.0"/>-->
+<!--          <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>-->
+<!--        </inertial>-->
+<!--        <visual>-->
+<!--      <origin rpy="0 0 0" xyz="0.9 .3 0.5"/>-->
+<!--&lt;!&ndash;      <geometry>&ndash;&gt;-->
+<!--&lt;!&ndash;        <box size="1 0.1 0.1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;      </geometry>&ndash;&gt;-->
+<!--      <geometry>-->
+<!--&lt;!&ndash;        <mesh filename="../meshes/cube.obj" scale="0.8 0.025 0.1"/>&ndash;&gt;-->
+<!--        <mesh filename="../meshes/cube.obj" scale="0.8 0.1 0.1"/>-->
+<!--      </geometry>-->
+<!--	  <material name="framemat0"/>-->
+<!--	  </visual>-->
+<!--        <collision>-->
+<!--      <origin rpy="0 0 0" xyz="0.9 .3 0.5"/>-->
+<!--      <geometry>-->
+<!--        <box size="0.8 0.1 0.1"/>-->
+<!--      </geometry>-->
+<!--	  </collision>-->
+<!--    </link>-->
+
+<!--    <joint name="joint_baseLink_backing" type="fixed">-->
+<!--        <parent link="baseLink"/>-->
+<!--        <child link="backing"/>-->
+<!--        <origin xyz="0 0 0" rpy="0 0 0"/>   &lt;!&ndash; x across, -y outwards from front, z up &ndash;&gt;-->
+<!--    </joint>-->
+
+   <link name="door">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.4 0 0.4"/>
+      <mass value=".5"/>
+      <inertia ixx="0.048966669" ixy="0" ixz="0" iyy="0.046466667" iyz="0" izz="0.0041666669"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0.4 0 0.4"/>
+<!--      <geometry>-->
+<!--        <box size="0.9  0.05 0.8"/>  &lt;!&ndash; width across, thickness, height &ndash;&gt;-->
+<!--      </geometry>-->
+      <geometry>
+        <mesh filename="../meshes/cube.obj" scale="0.9 0.05 0.8"/>
+      </geometry>
+	   <material name="doormat0">
+        <color rgba="0.95 0.95 0.95 1.0" />
+      </material>
+
+	  </visual>
+     <collision>
+       <origin rpy="0 0 0" xyz="0.4 0 0.4"/>
+       <geometry>
+         <box size="0.9  0.05 0.8"/>
+       </geometry>
+     </collision>
+
+   </link>
+
+    <joint name="joint_baseLink_door" type="revolute">
+    <parent link="baseLink"/>
+    <child link="door"/>
+	<dynamics damping="0.001" friction="0.0001"/>
+    <origin xyz="0.05 0 0.1"/>
+		<axis xyz="0 0 1"/>
+    <limit effort="100.0" lower="-3.14" upper="-1.5" velocity="100.0" />
+  </joint>
+
+    <!-- start of 2 link "door style" handle -->
+<!--    <link name="handle1">-->
+<!--        <inertial>-->
+<!--            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>-->
+<!--            <mass value="1.0"/>-->
+<!--            <inertia ixx="0.048966669" ixy="0" ixz="0" iyy="0.046466667" iyz="0" izz="0.0041666669"/>-->
+<!--        </inertial>-->
+<!--        <visual>-->
+<!--            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>-->
+<!--            <geometry>-->
+<!--                <box size="0.05  0.3 0.05"/>-->
+<!--            </geometry>-->
+<!--            <material name="doormat0">-->
+<!--                <color rgba="0.8 0.8 0.3 1" />-->
+<!--            </material>-->
+<!--        </visual>-->
+<!--        <collision>-->
+<!--           <origin rpy="0 0 0" xyz="0.0 0 0.0"/>-->
+<!--           <geometry>-->
+<!--               <box size="0.1  0.05 0.1"/>-->
+<!--           </geometry>-->
+<!--        </collision>-->
+<!--    </link>-->
+
+<!--    <joint name="joint_door_handle1" type="fixed">-->
+<!--        <parent link="door"/>-->
+<!--        <child link="handle1"/>-->
+<!--        <origin xyz="0.8 -0.15 .45" rpy="0 0 0"/>   &lt;!&ndash; x across, -y outwards from front, z up &ndash;&gt;-->
+<!--    </joint>-->
+
+    <!-- start of 3 link "cabinet style" handle -->
+
+    <link name="handle_main">
+        <contact>
+            <lateral_friction value=".9"/>
+<!--            <inertia_scaling value="3.0"/>-->
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+            <mass value=".05"/>
+            <inertia ixx="0.048966669" ixy="0" ixz="0" iyy="0.046466667" iyz="0" izz="0.0041666669"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+<!--            <geometry>-->
+<!--                <box size="0.075 0.025 0.325"/>-->
+<!--            </geometry>-->
+            <geometry>
+                <mesh filename="../meshes/cube.obj" scale="0.1 0.035 0.335"/>
+            </geometry>
+            <material name="doormat1">
+                <color rgba=".4667 .2457 .1647 1" />-->
+            </material>
+        </visual>
+        <collision>
+           <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+           <geometry>
+               <box size="0.1  0.035 0.325"/>
+           </geometry>
+        </collision>
+    </link>
+
+    <link name="handle_top">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+            <mass value=".01"/>
+            <inertia ixx="0.048966669" ixy="0" ixz="0" iyy="0.046466667" iyz="0" izz="0.0041666669"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+<!--            <geometry>-->
+<!--                <box size="0.075  0.15 0.025"/>-->
+<!--            </geometry>-->
+            <!-- cube1 is used as a workaround for weird pybullet EGL vs OpenGL rendering issues!!! -->
+            <!-- same as cube.obj vs using box -->
+            <geometry>
+                <mesh filename="../meshes/cube1.obj" scale="0.1 0.2 0.035"/>
+            </geometry>
+            <material name="doormat1"/>
+        </visual>
+        <collision>
+           <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+           <geometry>
+               <box size="0.1  0.2 0.035"/>
+           </geometry>
+        </collision>
+    </link>
+
+    <link name="handle_bottom">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+            <mass value=".01"/>
+            <inertia ixx="0.048966669" ixy="0" ixz="0" iyy="0.046466667" iyz="0" izz="0.0041666669"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+<!--            <geometry>-->
+<!--                <box size="0.075  0.15 0.025"/>-->
+<!--            </geometry>-->
+            <geometry>
+                <mesh filename="../meshes/cube2.obj" scale="0.1 0.2 0.035"/>
+            </geometry>
+            <material name="doormat1"/>
+        </visual>
+        <collision>
+           <origin rpy="0 0 0" xyz="0.0 0 0.0"/>
+           <geometry>
+               <box size="0.1  0.2 0.035"/>
+           </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_door_handle_main" type="fixed">
+        <parent link="door"/>
+        <child link="handle_main"/>
+        <origin xyz="0.8 -0.225 .45" rpy="0 0 0"/>   <!-- x across, -y outwards from front, z up -->
+    </joint>
+
+    <joint name="joint_door_handle_top" type="fixed">
+        <parent link="door"/>
+        <child link="handle_top"/>
+        <origin xyz="0.8 -0.12 .6" rpy="0 0 0"/>   <!-- x across, -y outwards from front, z up -->
+    </joint>
+
+    <joint name="joint_door_handle_bottom" type="fixed">
+        <parent link="door"/>
+        <child link="handle_bottom"/>
+        <origin xyz="0.8 -0.12 .3" rpy="0 0 0"/>   <!-- x across, -y outwards from front, z up -->
+    </joint>
+
+</robot>
+

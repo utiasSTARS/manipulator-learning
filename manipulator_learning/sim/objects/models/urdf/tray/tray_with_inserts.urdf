@@ -1,0 +1,30 @@
+<?xml version="0.0" ?>
+<robot name="tray_with_inserts.urdf">
+
+<link name="tray_with_inserts">
+	<contact>
+      <lateral_friction value="0.6"/>
+    </contact>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+       <mass value="500"/>
+       <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+		<mesh filename="tray_with_inserts.obj" scale=".001 .001 .001"/>  <!-- 1mm in freecad is treated as 1m here -->
+      </geometry>
+       <material name="grey">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision concave="yes">
+      <geometry>
+      	<mesh filename="tray_with_inserts.obj" scale=".001 .001 .001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+</link>
+
+</robot>

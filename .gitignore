@@ -1,0 +1,4 @@
+env-specs/projects
+*.pdf
+*.pyc
+*.egg-info

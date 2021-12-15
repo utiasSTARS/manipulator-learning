@@ -1,0 +1,34 @@
+<?xml version="0.0" ?>
+<robot name="rod.urdf">
+
+<link name="baseLink">
+	<visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <cylinder radius="0.0125" length="0.07"/>
+    </geometry>
+    <material name="yellow">
+        <color rgba="1 1 0 1"/>
+      </material>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <!-- tolerance values based on hole being 4cm diameter -->
+      <!-- tolerance: 1.5cm -->
+<!--      <cylinder radius="0.0125" length="0.07"/>-->
+      <!-- tolerance:: .25cm -->
+      <cylinder radius="0.01875" length="0.07"/>
+      <!-- tolerance: .5cm -->
+      <!--<cylinder radius="0.0175" length="0.07"/>-->
+    </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.1"/>
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+    <inertia ixx="0.000526462289415" ixy="0.0" ixz="0.0" iyy="0.000526462289415" iyz="0.0" izz="0.000568125"/>
+    <!-- <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/> -->
+  </inertial>
+</link>
+
+</robot>

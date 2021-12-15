@@ -1,0 +1,2 @@
+recursive-include manipulator_learning/sim/robots/models *
+recursive-include manipulator_learning/sim/objects *
