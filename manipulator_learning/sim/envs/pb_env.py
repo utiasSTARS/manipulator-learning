@@ -534,6 +534,20 @@ class PBEnv(gym.Env):
 
         return poses, vels, accs
 
+    def block_pose_rel_to_world(self, block_pos, block_rot_xyzw):
+        """ Convert a given block pose in the frame of the env to the pybullet world frame. """
+        if self.poses_ref_frame == 'b':
+            w_to_r_frame = self.gripper.manipulator.get_link_pose(
+                self.gripper.ref_frame_indices[self.poses_ref_frame])
+            rel_to_world_tq = sim_utils.TransformMat(
+                mat=sim_utils.invert_transform(trans_quat_to_mat(w_to_r_frame[:3], w_to_r_frame[3:]))).to_pb(single_tuple=True)
+            rel_to_world_tq = (rel_to_world_tq[:3], rel_to_world_tq[3:])
+            pose = sim_utils.change_pose_ref_frame((block_pos, block_rot_xyzw), rel_to_world_tq)
+        else:
+            raise NotImplementedError(f"Implement for {self.poses_ref_frame} if you need it")
+
+        return pose
+
     def get_random_gripper_pose(self):
         """ Get a random gripper pose on a reset """
         # interpreted as 6-tuple as defined in __init__
@@ -596,7 +610,11 @@ class PBEnv(gym.Env):
                 base_rot_quat = convert_quat_tf_to_pb(tf3d.euler.euler2quat(*base_rot, axes='rxyz'))
                 return base_trans, base_rot_quat
 
-    def reset(self, hard_reset=False, mb_base_angle=None):
+    def reset(self, hard_reset=False, mb_base_angle=None, reset_dict=None):
+
+        if reset_dict is not None:
+            if self.poses_ref_frame != 'b':
+                raise NotImplementedError(f"Implement it if you need it for ref frame {self.poses_ref_frame}")
 
         self.initial_move_made = False
         robot_reset_success = False
@@ -608,6 +626,9 @@ class PBEnv(gym.Env):
                 init_gripper_pose = self.get_random_gripper_pose()
             else:
                 init_gripper_pose = self.init_gripper_pose
+
+            if self.poses_ref_frame == 'b' and reset_dict is not None and 'pos' in reset_dict:
+                init_gripper_pose[0] = reset_dict['pos']
 
             if hard_reset:  # resets pb client, reloads urdf...currently unused, probably needs to be fixed
                 self.block_ids = []
@@ -734,11 +755,15 @@ class PBEnv(gym.Env):
             for o in self._obj_ids:
                 self._pb_client.removeBody(o)
             self._obj_ids = []
+            self._obj_in_state_i = -1
             wc = np.array(self.workspace_center)
-            for r_lim, init_pos, rgba, name in \
-                    zip(self.obj_random_lim, self.obj_init_pos, self.obj_rgba, self.obj_urdf_names):
+            for obj_i, (r_lim, init_pos, rgba, name) in \
+                    enumerate(zip(self.obj_random_lim, self.obj_init_pos, self.obj_rgba, self.obj_urdf_names)):
                 r_lim = np.array(r_lim)
                 init_pos = np.array(init_pos)
+
+                if obj_i in self.objs_in_state:
+                    self._obj_in_state_i += 1
 
                 if np.any(r_lim):
                     if self.green_on_blue:  # for unstack-->stack env
@@ -768,6 +793,12 @@ class PBEnv(gym.Env):
                 else:
                     pos = wc + init_pos
                     rot = [0, 0, 0, 1]
+
+                if self.poses_ref_frame == 'b' and reset_dict is not None and 'obj_pos' in reset_dict and \
+                        obj_i in self.objs_in_state:
+                    reset_pos = reset_dict['obj_pos'][obj_i * 7: self._obj_in_state_i * 7 + 3]
+                    reset_rot = reset_dict['obj_pos'][obj_i * 7 + 3: self._obj_in_state_i * 7 + 7]
+                    pos, rot = self.block_pose_rel_to_world(reset_pos, reset_rot)
 
                 self._obj_ids.append(self._pb_client.loadURDF(self.object_urdf_root + '/' + name + '.urdf', pos, rot))
                 self.update_body_visual(self._obj_ids[-1], *rgba)
@@ -1074,7 +1105,7 @@ class PBEnv(gym.Env):
                 pbc.changeVisualShape(body_id, link_id, shapeIndex=shape_id, textureUniqueId=text_id)
 
     def render(self, mode='human', depth_type='original', segment_mask=False):
-        assert mode in PBEnv.RENDER_MODES, f"{mode} is not a valid render mode, must be one of {PBEnv.RENDER_MODES}"
+        # assert mode in PBEnv.RENDER_MODES, f"{mode} is not a valid render mode, must be one of {PBEnv.RENDER_MODES}"
 
         # cam pose override for choosing a new cam pose, comment out during regular operation ---------------
         # if not hasattr(self, "cam_pose_override"):

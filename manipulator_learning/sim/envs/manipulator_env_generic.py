@@ -537,9 +537,9 @@ class ManipulatorEnv(gym.Env):
         elif mode == 'rgb_and_true_depth_and_segment_mask':
             return self.env.render('workspace', depth_type='true', segment_mask=True)
 
-    def reset(self, mb_base_angle=None):
+    def reset(self, mb_base_angle=None, reset_dict=None):
         self.img_rendered = False
-        obs_dict = self.env.reset(mb_base_angle=mb_base_angle)
+        obs_dict = self.env.reset(mb_base_angle=mb_base_angle, reset_dict=reset_dict)
         self.prev_pos = None
         self._prev_grip_pos = None
         self._prev_grip_feedback = None
@@ -586,7 +586,7 @@ if __name__ == '__main__':
     #         env.reset()
     #     time.sleep(.01)
 
-    from manipulator_learning.learning.imitation.devices.keyboard_control_general import KeyboardSteer
+    from manipulator_learning.learning.imitation.devices.keyboard_control import KeyboardSteer
     ks = KeyboardSteer()
     first_move = False
     loop_start = time.time()

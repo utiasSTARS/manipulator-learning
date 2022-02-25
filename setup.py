@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='manipulator_learning',
-    version='0.1.0',
+    version='0.1.1',
     description='Package with OpenAI Gym robotic manipulation environments and learning code.',
     author='Trevor Ablett',
     author_email='trevor.ablett@robotics.utias.utoronto.ca',

@@ -1,2 +1,3 @@
 recursive-include manipulator_learning/sim/robots/models *
 recursive-include manipulator_learning/sim/objects *
+recursive-include manipulator_learning/learning/agents/tf/assets *

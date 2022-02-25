@@ -7,7 +7,7 @@ import shutil
 
 class Dataset:
     def __init__(self, data_dir, np_filename='data.npz', img_type='.png', imgs_per_folder=1000,
-                 state_dim=None, act_dim=None):
+                 state_dim=None, act_dim=None, reward_dim=1):
         # valid_indices are valid to sample if looking to get a random sample. this way,
         # we can always just grab the the obs and action from the current index, and the obs from the
         # next index to get a full transition, without having to store extra copies of next observations.
@@ -24,7 +24,8 @@ class Dataset:
         )
         if state_dim is not None and act_dim is not None:
             self.ind = dict(
-                s=0, a=state_dim, r=state_dim + act_dim, m=state_dim + act_dim + 1, d=state_dim + act_dim + 2)
+                s=0, a=state_dim, r=state_dim + act_dim, m=state_dim + act_dim + reward_dim,
+                d=state_dim + act_dim + reward_dim + 1)
             self.data['column_headers'] = np.array(self.ind)
         else:
             self.ind = None
